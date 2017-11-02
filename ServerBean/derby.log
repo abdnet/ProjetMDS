@@ -1,0 +1,8 @@
+----------------------------------------------------------------
+2017-10-26 16:04:32.032 GMT:
+Amorçage de Derby version The Apache Software Foundation - Apache Derby - 10.6.2.1 - (999685) : instance a816c00e-015f-596d-89c1-00000410e628 
+dans le répertoire de base de données /tmp/gfembed3838375810370566506tmp/lib/databases/embedded_default  avec le chargeur de classe sun.misc.Launcher$AppClassLoader@76f33280
+
+java.vendor=Oracle Corporation
+java.runtime.version=1.7.0_72-b14
+Chargeur de classe de la base de données démarré - derby.database.classpath=''

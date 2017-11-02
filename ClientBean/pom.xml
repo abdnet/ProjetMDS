@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>    
+<parent>
+    <groupId>org.uvsq-EJB</groupId>
+    <artifactId>EJBApp</artifactId>
+    <version>4.0-SNAPSHOT</version>
+  </parent>
+  <groupId>org.uvsq-EJB.Entity-Bean</groupId>
+  <artifactId>ClientBean</artifactId>
+  <packaging>jar</packaging>
+  <name>ClientBean</name>
+  <version>4.0-SNAPSHOT</version>
+  <dependencies>
+    <!-- the client must know the entities and the API -->
+   <dependency> 
+            <groupId>log4j</groupId> 
+            <artifactId>log4j</artifactId> 
+            <version>1.2.17</version> 
+            <type>jar</type> 
+</dependency>
+    <dependency>
+      <groupId>org.uvsq-EJB.Entity-Bean</groupId>
+      <artifactId>EntityBean</artifactId>
+      <version>4.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>org.uvsq-EJB.Entity-Bean</groupId>
+      <artifactId>ApiBean</artifactId>
+      <version>4.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>javax</groupId>
+      <artifactId>javaee-api</artifactId>
+      <version>7.0</version>
+      <!-- for explanations about scope=provided, please see:
+	   https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html
+      -->
+      <scope>provided</scope>
+    </dependency>
+    <!-- Running EJB lookup operations in a standalone client requires
+	 GlassFish client jar -->
+    <dependency>
+      <groupId>org.glassfish.main.appclient</groupId>
+      <artifactId>gf-client</artifactId>
+      <version>${glassfish.version}</version>
+    </dependency>
+  </dependencies>
+  
+  <build>
+    <plugins>
+      <plugin>
+	<groupId>org.codehaus.mojo</groupId>
+	<artifactId>exec-maven-plugin</artifactId>
+        <version>1.2.1</version>
+	<executions>
+	  <execution>
+	    <goals>
+	      <goal>java</goal>
+	    </goals>
+	  </execution>
+	</executions>
+	<configuration>
+	  <mainClass>enterprise.appClient</mainClass>   
+	</configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
