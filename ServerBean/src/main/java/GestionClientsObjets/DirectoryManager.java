@@ -36,8 +36,8 @@ public  class DirectoryManager implements AdministrationClient,Constants {
 					 return "Ok";
 				 }		 
 			}
+			return "Non";
 		}
-	em.close();
 	return "Non";
 }
 
@@ -136,17 +136,20 @@ public  class DirectoryManager implements AdministrationClient,Constants {
 	@Override
 	public String addObjet(Objets o) {
 		Client c =this.getClientById(o.getClient().getId());
-		if(o!=null) {
-			if(c!=null) {
+		Objets oo= this.getObjetsById(o.getId());
+		if(oo==null) {
+			if(c!=null&&o!=null) {
 				em.persist(o);
 				if(this.getObjetsById(o.getId())!=null) {
 					c.addObjet(o);
+					this.updateClient(c);
 					return "Ok";
 				}		
 			}
+			return "Non";
 		}
 		return "Non";
-	}
+		}
 
 	@Override
 	public boolean deleteObjet(Objets o, Client c) {
@@ -173,9 +176,9 @@ public  class DirectoryManager implements AdministrationClient,Constants {
 	}
 
 	@Override
-	public Collection<Client> getAllClients() {
+	public List<Client> getAllClients() {
 		Query requete = em.createQuery( JPQL_SELECT_ALL_SAMPLE_CLIENT );
-		return (Collection<Client>) requete.getResultList();
+		return (List<Client>) requete.getResultList();
 		
 	}
 

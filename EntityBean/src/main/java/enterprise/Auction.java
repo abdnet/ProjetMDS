@@ -3,8 +3,10 @@ package enterprise;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.persistence.*;
 
@@ -17,18 +19,16 @@ import javax.persistence.*;
 public class Auction implements Serializable {
 
 	
-
-	private static double last_bid=0;
-	private static 	String id_last_bider;   
+	  
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	@Column
 	private int statut;
 	@ManyToOne
-	@JoinTable(name="mesauctions")
+	@JoinColumn(name="pseudo")
 	private Client client;
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name="id_Objets")
 	private Objets Objets;
 	@Column
@@ -36,22 +36,27 @@ public class Auction implements Serializable {
 	@Column
 	private float prix_depart;
 	@Column
-	private float prix_inc;
-	@OneToMany(fetch=FetchType.EAGER, mappedBy = "auction", cascade=CascadeType.ALL)
-	private List<Client> mesabonnes = new ArrayList<Client>();
+	private double prix_inc;
+	@Column
+	private double prix_final;
+	@OneToOne
+	private static 	Client last_bider; 
 	
 	
 	
-	
-	
-	public List<Client> getAbonnees() {
-		return mesabonnes;
-	}
-	
-	public void setMesabonnes(List<Client> mesabonnes) {
-		this.mesabonnes = mesabonnes;
-	}
 
+
+	public Auction(int id, Client client, enterprise.Objets objets) {
+		this.id = id;
+		this.statut = 0;
+		this.client = client;
+		Objets = objets;
+		this.duree = 0;
+		this.prix_depart = 0;
+		this.prix_inc = 0;
+		this.prix_final=0;
+	}
+	
 	public Client getClient() {
 		return client;
 	}
@@ -67,26 +72,47 @@ public class Auction implements Serializable {
 	public float getDuree() {
 		return duree;
 	}
-	public void setDuree(float duree) {
+	public Auction setDuree(float duree) {
 		this.duree = duree;
+		return this;
 	}
 	public float getPrix_depart() {
 		return prix_depart;
 	}
-	public void setPrix_depart(float prix_depart) {
+	public Auction setPrix_depart(float prix_depart) {
 		this.prix_depart = prix_depart;
+		return this;
 	}
 	public double getLast_bid() {
-		return last_bid;
+		return prix_final;
 	}
-	public void setLast_bid(double last_bid) {
-		this.last_bid = last_bid;
+	public Auction setLast_bid(double prix_final) {
+		this.prix_final = prix_final;
+		return this;
 	}
-	public String getId_last_bider() {
-		return id_last_bider;
+	public Client getId_last_bider() {
+		return last_bider;
 	}
-	public void setId_last_bider(String id_last_bider) {
-		this.id_last_bider = id_last_bider;
+	public Auction setId_last_bider(Client id_last_bider) {
+		this.last_bider = id_last_bider;
+		return this;
+	}
+
+	public double getPrix_final() {
+		return prix_final;
+	}
+
+	public Auction setPrix_final(double prix_final) {
+		this.prix_final = prix_final;
+		return this;
+	}
+
+	public static Client getLast_bider() {
+		return last_bider;
+	}
+
+	public static void setLast_bider(Client last_bider) {
+		Auction.last_bider = last_bider;
 	}
 
 	private static final long serialVersionUID = 1L;
@@ -108,19 +134,19 @@ public class Auction implements Serializable {
 	public void setStatut(int statut) {
 		this.statut = statut;
 	}
-	public float getPrix_inc() {
+	public double getPrix_inc() {
 		return prix_inc;
 	}
-	public void setPrix_inc(float prix_inc) {
-		this.prix_inc = prix_inc;
+	public Auction setPrix_inc(double d) {
+		this.prix_inc = d;
+		return this;
 	}
-	
 	
 	
 	@Override
 	public String toString() {
 		return "Auction [id=" + id + ", statut=" + statut + ", client=" + client + ", Objets=" + Objets + ", duree="
-				+ duree + ", prix_depart=" + prix_depart + ", prix_inc=" + prix_inc + ", abonnees=" + mesabonnes + "]";
+				+ duree + ", prix_depart=" + prix_depart + ", prix_inc=" + prix_inc + ", abonnees="  + "]";
 	} 
    
 }

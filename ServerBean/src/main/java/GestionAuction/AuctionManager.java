@@ -2,11 +2,13 @@ package GestionAuction;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+
 import enterprise.AdministrationAuction;
 import enterprise.AdministrationClient;
 import enterprise.Auction;
@@ -28,23 +30,29 @@ public class AuctionManager implements AdministrationAuction,Constants {
 	public String creatAuction(Auction a) {
 		Auction aa = this.getAuctionById(a.getId());
 		Client cli = sb.getClientById(a.getClient().getId());
-		if(cli!=null && checkCountAuction(cli.getId())) {	
-				if(aa==null && a!=null) {
-				if(this.checkObjetsAuction(a.getClient().getId(), a.getObjets().getId())) {
-					if(sb.getObjetsById(a.getObjets().getId())!=null && sb.getClientById(a.getClient().getId())!=null) {
+		if(cli!=null && a!=null) {
+			if(aa==null&&sb.getClientRights(cli.getId(), "objets")<=5) {
+				if(sb.getObjetsById(a.getObjets().getId())!=null && a.getObjets().getClient().getId().equals(cli.getId())) {
+					if(this.checkObjetsAuction(a.getClient().getId(), a.getObjets().getId())) {
 						em.persist(a);					
-						cli.getMesauction().add(a);
+						cli.setNb_Objetss_aucttion(cli.getNb_Objetss_aucttion()+1);
 						sb.updateClient(cli);
 						return "OK";
+					}else {
+						return "L'objet est en cours de vente ou deja vendu";
 					}
-					
+
+				}else {
+					return "vous n'êtes pas le proprietaire de l'objet ou l'objet n'existe plus";
 				}
-					return "L'objet est en cours de vente ou déja vendu";
-				}else{
-						return "Erreur lors de la creation de l'auction"; 
-				}
+			}else {
+				return "Limite depassé";
+			}
+		}else {
+			return "( Problem : Auction or User )";
 		}
-		return "vous êtes limité à 5 ventes en même temps !!";
+		
+		
 	}
 
 
@@ -53,26 +61,21 @@ public class AuctionManager implements AdministrationAuction,Constants {
 		
 		Client cli =sb.getClientById(c);
 		Auction aa = this.getAuctionById(a);
-		if( cli!=null && aa!=null) {
-			int current_statut= aa.getStatut();
-			Objets obj =sb.getObjetsById(aa.getObjets().getId());
-			if(current_statut==PARAM_AUCTION_STATUT_NOT_STARTED && this.checkCountAuction(c) && obj!=null) {
-			if(cli.getId().equals(aa.getClient().getId())) {
-				if(this.updateAuction(aa.getId(), PARAM_AUCTION_STATUT_STARTED)!=null) {
-					return "OK";
-				}else {
-					return "Non1";
+		if(cli!=null && aa!=null) {
+			int current_statut = aa.getStatut();
+			if(PARAM_AUCTION_STATUT_STARTED!=current_statut) {
+				if(cli.getId().equals(aa.getClient().getId())) {
+					this.updateAuction(aa.getId(), PARAM_AUCTION_STATUT_STARTED);
+					return "Ok";
+				}else{
+					return "vous n'avez le droit de demarrer cette auction !";
 				}
 			}else {
-				return "Non2"+cli.getId()+"  "+aa.getClient().getId()+" Auction  "+aa;
+				return "L'auction est déja lancée !";
 			}
-		}
-			else {
-				return "5 auctions en attente"; 
-			}
-		}
-		
-		return"non";
+		}else {
+			return "Erreur lors de demarage de l'auction";
+		}	
 	}
 
 	@Override
@@ -96,26 +99,51 @@ public class AuctionManager implements AdministrationAuction,Constants {
 	public String sendBidAution(String c, int a,boolean z) {
 		Client cli=sb.getClientById(c);
 		Auction aa = this.getAuctionById(a);
-		if(cli==null ||!aa.getAbonnees().contains(cli)) {
-			return "Vous n'etes pas abonné à l'auction";
-		}
-		if(aa==null || aa.getStatut()!=PARAM_AUCTION_STATUT_STARTED) {
-			return "L'auction n'a pas demarée .. veuillez patienter svp";
-		}
-		if(z) {
-		aa.setId_last_bider(c);
-		aa.setPrix_depart(aa.getPrix_depart()+aa.getPrix_inc());
-		em.merge(aa);
-		}else {
-			Objets o= sb.getObjetsById(aa.getObjets().getId());
-			o.setClient(sb.getClientById(aa.getId_last_bider()));
-			em.merge(o);
-			this.closeAuction(a);
-			return "Fin de l'auction";
-		}
+			
+			if( cli!=null && aa!=null) {
+					if(aa.getStatut()==PARAM_AUCTION_STATUT_STARTED) {
+						if( cli.getStatut()!=PARAM_ADMIN_USER_STATUT || aa.getClient().getId().equals(cli.getId())) {
+							if(z) {
+								aa.setId_last_bider(cli);
+								if(aa.getPrix_final()==0) {
+									aa.setPrix_final(aa.getPrix_inc()+aa.getPrix_depart());
+								}
+							else{
+								aa.setPrix_final(aa.getPrix_final()+aa.getPrix_inc());
+							}
+								aa.setId_last_bider(cli);
+								
+								Auction cx=em.merge(aa);
+								return "Votre bid a été enregistré ,le prix de l'objet devient : "+cx.getPrix_final();
+							}else {
+								aa.setId_last_bider(cli);
+								if(aa.getPrix_final()==0) {
+									aa.setPrix_final(aa.getPrix_inc()+aa.getPrix_depart());
+								}
+							else{
+								aa.setPrix_final(aa.getPrix_final()+aa.getPrix_inc());
+							}
+								aa.setId_last_bider(cli);
+								
+								Auction cx=em.merge(aa);
+								Objets cs= sb.getObjetsById(aa.getObjets().getId());
+								cs.setClient(cli);
+								sb.updateObjet(cs);
+								closeAuction(cx.getId());
+								return "Fin de l'auction l'objet a été acheté par "+cli.getNom()+" [ Prix final ]"+cx.getPrix_final()+""
+										+ "\n Auction is closed "+closeAuction(cx.getId());
+							}
+							
+						}else {
+							return "les admins et propriétaire de l'auction n'ont pas le droit de faire des proposition";
+						}
+					}else {
+						return "l'auction n'a pas encore demarée!";
+					}
+			}else {
+				return "";
+			}
 		
-		
-		return "Bid enregistré";
 		
 	}
 
@@ -164,42 +192,9 @@ public class AuctionManager implements AdministrationAuction,Constants {
 		query.setParameter(1, pseudo);
 		return (ArrayList<Auction>)query.getResultList();
 	}
-	@Override
-	public String connectToAuction(int auction, String client) {
-		Auction a = this.getAuctionById(auction);
-		//em.refresh(a);
-		Client cli= sb.getClientById(client);
-		if(!a.getAbonnees().contains(cli)) {			
-		if(cli!=null && a!=null  && !cli.getId().equals(a.getClient().getId()) && cli.getStatut()!=PARAM_ADMIN_USER_STATUT&&a.getStatut()==PARAM_AUCTION_STATUT_STARTED) {
-					cli.setAuction(a);
-					sb.updateClient(cli);
-					a.getAbonnees().add(cli);
-					a.setMesabonnes(a.getAbonnees());
-					em.merge(a);
-					Auction c =getAuctionById(a.getId());
-					return "Accordé"+c.getAbonnees().contains(cli);	}
-		}else{
-			return "Vous êtes déja abonné";
-		}
-		
-		return "Refusé";
-	} 
+
 	
 
-
-	private boolean checkCountAuction(String cli) {
-		Client cl= sb.getClientById(cli);
-		if( cl!=null) {
-			
-			List<Auction> mesauctions = cl.getMesauction();
-			/*Query query = em.createQuery(JPQL_COUNT_AUCTION_CREATED_BY_CLIENT);
-			query.setParameter(1, cl);
-			query.setParameter(2, PARAM_AUCTION_STATUT_STARTED);
-			List<Long> count = query.getResultList();*/
-			return (mesauctions.size()<PARAM_LIMIT_AUCTION)?true:false;
-		}
-		return false;
-	}
 	
 	private boolean checkObjetsAuction(String cli,int objet) {
 		Client cl= sb.getClientById(cli);
@@ -208,22 +203,22 @@ public class AuctionManager implements AdministrationAuction,Constants {
 			Query query =em.createQuery(JPQL_ADD_OBJET_TO_AUCTION);
 			query.setParameter(1, cl);
 			query.setParameter(2, obj);
-			List<Long> count = query.getResultList();
-			return (count.get(0)==0)?true:false;
+			return ((Long)query.getSingleResult()==0)?true:false;
 		}
 
 		return false;
 		
 	}
 	
-	private  boolean containsClient(List<Client> list, Client id) {
-	    for (Client object : list) {
-	        if (object.getId() == id.getId()) {
-	            return true;
-	        }
-	    }
-	    return false;
+	@Override
+	public Auction updateAuction(Auction c) {
+			return em.merge(c);
 	}
+
+	
+	
+	
+	
 	
 
 	

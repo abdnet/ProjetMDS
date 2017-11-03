@@ -17,139 +17,109 @@ public class appClient {
 			InitialContext ic = new InitialContext();
 
 			sb = (AdministrationClient) ic.lookup("enterprise.AdministrationClient");
-			sb3 = (AdministrationClient) ic.lookup("enterprise.AdministrationClient");
+			sb2 = (AdministrationAuction) ic.lookup("enterprise.AdministrationAuction");
 
-			sb2=(AdministrationAuction) ic.lookup("enterprise.AdministrationAuction");
-			System.out.println("               LE Client                ");
-			c=new Client();
-			c.setMail("idouh@il.com");
-			c.setId("abel");
-			c.setCode_postal(243);
-			c.setNb_Objetss_aucttion(2);
-			c.setNom("putain cmarche a moitié");
-			c.setPrenom("ssd");
-			c.setStatut(2);
+			System.out.println("  \n\n\n\n ............Creation des utilisateurs ...................");
+			Client cl1,cl2,cl3,cl4,cl5;
+			//Admin
+			cl1= new Client("abdel", "iidouhammou", "abderrahman", 95800, "idouhammou.a@gmail.com", 1);
+			//Simple user
+			cl2= new Client("Dup1","Arthur","Martin",75009,"arthur@gmail.com",2);
+			cl3= new Client("Dup2","Dupont","Lionel",75019,"dupont@gmail.com",2);
+			cl4= new Client("Dup3","Axel","Martin",78109,"axel@gmail.com",2);
+			cl5= new Client("Dup4","Mimi","Bouch",51009,"mimi@gmail.com",2);
 			
-			c4=new Client();
-			c4.setMail("idouh@l.com");
-			c4.setId("mimi");
-			c4.setCode_postal(243);
-			c4.setNb_Objetss_aucttion(2);
-			c4.setNom("Dupont");
-			c4.setPrenom("ssd");
-			c4.setStatut(2);
+			System.out.println("\n\n\n\n .............Persistence des utilisateurs ...................");
 			
-			c2=new Client();
-			c2.setMail("idoh@ail.com");
-			c2.setId("yassine");
-			c2.setCode_postal(3243);
-			c2.setNb_Objetss_aucttion(3);
-			c2.setNom("idouhammou");
-			c2.setPrenom("sdsd");
-			c2.setStatut(2);
-			
-			c3=new Client();
-			c3.setMail("idoh@il.com");
-			c3.setId("admin");
-			c3.setCode_postal(3243);
-			c3.setNb_Objetss_aucttion(0);
-			c3.setNom("idouammou");
-			c3.setPrenom("sdsd");
-			c3.setStatut(1);
-			System.out.println("[Info] Creation d'un admin .."+sb.addClient(c3));
-			//les objets
-			o=new Objets();
-			o.setNom("ordi");
-			o.setDescription("mon ordi");
-			o.setCategorie("tech");
-			o.setClient(c2);
-			o.setId(1);
-			
-			o1=new Objets();
-			o1.setNom("ordi");
-			o1.setDescription("mon ordi");
-			o1.setCategorie("tech");
-			o1.setClient(c2);
-			o1.setId(2);
-			
-			System.out.println("[Info] Creation d'un user 2 .."+sb.addClient(c2));
-			System.out.println("[Info] Creation d'un user 4 .."+sb.addClient(c4));
+			System.out.println("Add client .... "+cl1.getNom()+" ...."+sb.addClient(cl1));
+			System.out.println("Add client .... "+cl2.getNom()+" ...."+sb.addClient(cl2));
+			System.out.println("Add client .... "+cl3.getNom()+" ...."+sb.addClient(cl3));
+			System.out.println("Add client .... "+cl4.getNom()+" ...."+sb.addClient(cl4));
+			System.out.println("Add client .... "+cl5.getNom()+" ...."+sb.addClient(cl5));
+			System.out.println(" \n\n Nombre de client .................."+sb.getAllClients().size());
+			System.out.println("\n\n\n\n .............Creation des Objets ...................");
 
-			System.out.println("[Info] Creation d'un user .."+sb.addClient(c));
-			System.out.println("add objet ..............."+sb.addObjet(o));
-			System.out.println("add objet ..............."+sb.addObjet(o1));
+			Objets obj1,obj2,obj3,obj4,obj5;
+			
+			obj1 = new Objets(1, "ordinateur portable", "ordinateur 1", "technologie",sb.getClientById(cl2.getId()));
+			obj2 = new Objets(2, "ordinateur portable", "ordinateur 2", "technologie",sb.getClientById(cl2.getId()));
+			obj3 = new Objets(3, "ordinateur portable", "ordinateur 3", "technologie",sb.getClientById(cl3.getId()));
+			obj4 = new Objets(4, "ordinateur portable", "ordinateur 4", "technologie",sb.getClientById(cl4.getId()));
+			obj5 = new Objets(5, "ordinateur portable", "ordinateur 5", "technologie",sb.getClientById(cl4.getId()));
 
-			System.out.println("Nb d'objet .................................."+sb.getAllObjets().size());
-			System.out.println("Les objets .................................."+sb.getObjetsByClient(c2).size());
-			System.out.println("Nombre de client ............................  "+sb.getAllClients().size());
+			System.out.println("\n\n\n\n .............Persistence des Objets ...................");
+			
+			System.out.println("Add Objet .... "+obj1.getNom()+" ...."+sb.addObjet(obj1));
+			System.out.println("Add Objet .... "+obj2.getNom()+" ...."+sb.addObjet(obj2));
+			System.out.println("Add Objet .... "+obj3.getNom()+" ...."+sb.addObjet(obj3));
+			System.out.println("Add Objet .... "+obj4.getNom()+" ...."+sb.addObjet(obj4));
+			System.out.println("Add Objet .... "+obj5.getNom()+" ...."+sb.addObjet(obj5));
+			System.out.println("Add Objet .... "+obj5.getNom()+" ...."+sb.addObjet(obj5));
+			System.out.println(" \n\n Nombre d'objets .................."+sb.getAllObjets().size());
+			
+			
+			System.out.println("\n\n\n\n .............Test Client_Objets ...................");
+			Client test_cl=sb.getClientById(cl2.getId());
+			System.out.println(" \n\n\tLes informations sur le client "+test_cl.getNom());
+			System.out.println(test_cl);
+			System.out.println("Les objets de "+test_cl.getNom()+"\n\n");
+			for(Objets obj:test_cl.getMesObjetss()) {
+				System.out.println(obj +"\n\n");
+			}
+			
+		
+			System.out.println("\n\n\n\n .............Creation des auctions ...................");
+			
+			Auction ac1,ac2,ac3,ac4,ac5,ac6,ac7,ac8;
+			ac1=new Auction(1,sb.getClientById("Dup1"), sb.getObjetsById(1));
+			ac2=new Auction(2,sb.getClientById(cl2.getId()), sb.getObjetsById(obj2.getId()));
+			ac3=new Auction(3,sb.getClientById(cl3.getId()), sb.getObjetsById(obj2.getId()));
+			ac4=new Auction(4,sb.getClientById(cl3.getId()), sb.getObjetsById(obj3.getId()));
+			ac5=new Auction(5,sb.getClientById(cl5.getId()), sb.getObjetsById(obj5.getId()));
+			ac6=new Auction(6,sb.getClientById(cl5.getId()), sb.getObjetsById(obj1.getId()));
+			ac7=new Auction(7,sb.getClientById(cl4.getId()), sb.getObjetsById(obj1.getId()));
+			ac8=new Auction(8,sb.getClientById(cl2.getId()), sb.getObjetsById(obj1.getId()));
+			
+			System.out.println("\n\n\n\n .............Persistence des auctions ...................");
+			System.out.println("Persist auction "+ac1.getId()+"..................."+sb2.creatAuction(ac1));
+			System.out.println("Persist auction "+ac2.getId()+"..................."+sb2.creatAuction(ac2));
+			System.out.println("Persist auction "+ac3.getId()+"..................."+sb2.creatAuction(ac3));
+			System.out.println("Persist auction "+ac4.getId()+"..................."+sb2.creatAuction(ac4));
+			System.out.println("Persist auction "+ac5.getId()+"..................."+sb2.creatAuction(ac5));
+			System.out.println("Persist auction "+ac6.getId()+"..................."+sb2.creatAuction(ac6));
+			System.out.println("Persist auction "+ac7.getId()+"..................."+sb2.creatAuction(ac7));
+			System.out.println("Persist auction "+ac8.getId()+"..................."+sb2.creatAuction(ac8));
+			
+			System.out.println("\n\n\n\n ................Lancer les auctions..........................");
+			ac1 = sb2.getAuctionById(ac1.getId());ac1.setDuree(20).setPrix_depart(24).setPrix_inc(10);sb2.updateAuction(ac1);
+			ac2 = sb2.getAuctionById(ac2.getId());ac2.setDuree(44).setPrix_depart(21).setPrix_inc(10);sb2.updateAuction(ac2);			
+			ac4 = sb2.getAuctionById(ac4.getId());ac4.setDuree(42).setPrix_depart(23).setPrix_inc(10);sb2.updateAuction(ac4);
 
-			System.out.println("To String "+sb.getClientById("abel"));
-			System.out.println("les droites de "+c.getId()+ " --- "+sb.getClientRights(c.getId(), "statut") +" ---- " +sb.getClientRights(c.getId(), "objets"));
-			System.out.println("Client ...... right "+sb.getClientRights(c.getId(), "objets")+" "
-									+ "une autre valeur (desicn) "+sb.updatdeClientRights(c, "statut",c3, 2)+""
-											+ " "+sb.getClientRights(c.getId(), "statut"));
+			System.out.println("Start auction  "+ac1.getId()+"..................."+sb2.startAuction(cl2.getId(),ac1.getId()));
+			System.out.println("Start auction  "+ac2.getId()+"..................."+sb2.startAuction(cl2.getId(),ac2.getId()));
+			System.out.println("Start auction  "+ac3.getId()+"..................."+sb2.startAuction(cl3.getId(),ac3.getId()));
+			System.out.println("Start auction  "+ac4.getId()+"..................."+sb2.startAuction(cl3.getId(),ac4.getId()));
+			System.out.println("Start auction  "+ac5.getId()+"..................."+sb2.startAuction(cl5.getId(),ac5.getId()));
+			System.out.println("Start auction  "+ac6.getId()+"..................."+sb2.startAuction(cl5.getId(),ac6.getId()));
+			System.out.println("Start auction  "+ac7.getId()+"..................."+sb2.startAuction(cl4.getId(),ac7.getId()));
+			System.out.println("Start auction  "+ac8.getId()+"..................."+sb2.startAuction(cl2.getId(),ac8.getId()));
 			
-			System.out.println(" autre modif "+sb.updatdeClientRights(c, "statut", c3, 2) +" mon statut "+sb.getClientRights(c.getId(), "statut")+"pour les objet j'ai "+sb.getClientRights(c.getId(), "objets"));
-			
-			
-			
-			
-			Client cli = sb.getClientById("yassine");
-			Client cl = sb.getClientById("abel");
-			System.out.println("le client yassine ...............;;;"+cli);
-			System.out.println(" le client est "+cli.getNom() +" nombre d'objet "+sb.getObjetsByClient(cli).size());
-			
-			//Auction
-			//
-			Objets oo=sb.getObjetsById(1);
-			Objets ooo=sb.getObjetsById(1);
+			System.out.println("\n\n\n ...........Inscription aux auctions.......................................");
+			System.out.println("Le client "+cl1.getNom()+" a fait un bid sur l'auction "+ac1.getId()+" ==> "+sb2.sendBidAution(cl1.getId(), ac1.getId(), true));
+			System.out.println("Le client "+cl2.getNom()+" a fait un bid sur l'auction "+ac1.getId()+" ==> "+sb2.sendBidAution(cl2.getId(), ac1.getId(), true));
+			System.out.println("Le client "+cl1.getNom()+" a fait un bid sur l'auction "+ac1.getId()+" ==> "+sb2.sendBidAution(cl1.getId(), ac1.getId(), true));
+			System.out.println("Le client "+cl5.getNom()+" a fait un bid sur l'auction "+ac1.getId()+" ==> "+sb2.sendBidAution(cl5.getId(), ac1.getId(), true));
+			System.out.println("Le client "+cl1.getNom()+" a fait un bid sur l'auction "+ac2.getId()+" ==> "+sb2.sendBidAution(cl1.getId(), ac2.getId(), true));
+			System.out.println("Le client "+cl4.getNom()+" a fait un bid sur l'auction "+ac3.getId()+" ==> "+sb2.sendBidAution(cl1.getId(), ac3.getId(), true));
+			//en utilisant les thread on peut simuler les temps de l'auction
+			System.out.println("Le client "+cl1.getNom()+" a fait un bid sur l'auction "+ac1.getId()+" ==> "+sb2.sendBidAution(cl1.getId(), ac1.getId(), false));
+			System.out.println("Le client "+cl3.getNom()+" a fait un bid sur l'auction "+ac2.getId()+" ==> "+sb2.sendBidAution(cl3.getId(), ac2.getId(), false));
 
-			Auction a,a1,a2,a3,a4;
-			a= new Auction();
-			a.setId(1);
-			a.setClient(cli);
-			a.setObjets(oo);
-			a.setPrix_depart(33);
-			a.setDuree(44);
-			
-			a1=new Auction();
-			a1.setId(2);
-			a1.setClient(cli);
-			a1.setObjets(ooo);
-			a1.setPrix_depart(33);
-			a1.setDuree(34);
-		//	a1.setStatut(2);
-			
-			System.out.println("Creationde la premiere auction ........."+sb2.creatAuction(a));
-			System.out.println("Creationde la deuxiéme auction ........."+sb2.creatAuction(a1));
-			
-			System.out.println("Start auction 1..................... "+sb2.startAuction(cli.getId(), a.getId()));
-			System.out.println("Start auction 2..................... "+sb2.startAuction(cli.getId(), a1.getId()));
-			
-			System.out.println("demande de "+cli.getId()+" reponse "+sb2.connectToAuction(a.getId(), cli.getId()));
-			System.out.println("demande de "+cl.getId()+" reponse "+sb2.connectToAuction(a.getId(), cl.getId()));
-			System.out.println("demande 2 de "+cl.getId()+" reponse "+sb2.connectToAuction(a.getId(), cl.getId()));
-			System.out.println("demande 3 de "+cl.getId()+" reponse "+sb2.connectToAuction(a.getId(), c4.getId()));
-
-			System.out.println("nombre d'abonnes .................."+sb2.getAuctionById(a.getId()).getAbonnees().size());
-			
-			System.out.println("First bid ........ "+cl.getNom() +" a proposé un bid --> "+sb2.sendBidAution(cl.getId(), 1, true));
-			
-			//System.out.println("Delete all auction "+sb2.deleteAllAuctions(c3.getId()));
-			
-			//Client b = sb.getClientById("yassine");
-			//System.out.println("mes objet depuis la bdd "+b.getMesObjetss().size());
-			
-			//System.out.println(" Smaple client to admin "+sb.updatdeClientRights(c2, "statut", c3, 2)+"   " +sb.getClientRights(c.getId(), "statut"));
-			//System.out.println("delete insert ................. EJB ................");
-			//System.out.println("Delete  objets ......................................"+sb.DeleteAllObjets());
-			//System.out.println("Nb d'objet ..........................................."+sb.getAllObjets().size());
-			//System.out.println("Delete users ..........................................."+sb.DeleteAllClient(c3.getId()));
-			//System.out.println("Nombre de client ......................................  "+sb.getAllClients().size());
-			
-			System.out.println("  client de sb3"+sb3.getClientById("yassine").getNom());
-			
-			 
+			/*System.out.println("Le cl			System.out.println("Le client "+cl1.getNom()+" a fait un bid sur l'auction "+ac1.getId()+" ==> "+sb2.sendBidAution(cl1.getId(), ac1.getId(), true));
+			System.out.println("Le client "+cl1.getNom()+" a fait un bid sur l'auction "+ac1.getId()+" ==> "+sb2.sendBidAution(cl1.getId(), ac1.getId(), true));
+ient "+cl4.getId()+" demande l'inscription à l'auction "+ac2.getId() +" reponse ==> "+sb2.connectToAuction(ac2.getId(),cl4.getId()));
+			System.out.println("Le client "+cl4.getId()+" demande l'inscription à l'auction "+ac2.getId() +" reponse ==> "+sb2.connectToAuction(ac2.getId(),cl4.getId()));
+	*/
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

@@ -24,7 +24,8 @@ public interface AdministrationAuction {
 	public Auction getAuctionById(int id);
 	public List<Auction> getAuctionByClientId(String pseudo);
 	
-	public String connectToAuction(int auction,String client);
+	public Auction updateAuction(Auction a);
+
 	
 
 }

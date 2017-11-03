@@ -26,38 +26,33 @@ public class Client implements Serializable {
 	@Column(unique=true)
 	private String mail;
 	
-   @OneToMany(fetch = FetchType.EAGER ,cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER ,cascade = CascadeType.ALL)
 	private List<Objets> mesObjetss=new ArrayList<Objets>();
 	
-	@OneToMany(fetch=FetchType.EAGER, mappedBy = "client", cascade={CascadeType.ALL})
-    private List<Auction> mesauction=new ArrayList<Auction>();
-	
-   @ManyToOne
-   @JoinTable(name="mesabonnes")
-   private Auction auction;
-
-
-	public Auction getAuction() {
-	return auction;
-	}
-
-
-	public void setAuction(Auction auction) {
-	this.auction = auction;
-	}
-
 	@Column
 	private int statut;
 	@Column
 	private int nb_Objetss_aucttion;
 	
+	
 	private static final long serialVersionUID = 1L;
 
+	
+	
+	
 	public Client() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
-	
-	
+	public Client(String pseudo, String nom, String prenom, int code_postal, String mail,int statut) {
+		this.pseudo = pseudo;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.code_postal = code_postal;
+		this.mail = mail;
+		this.statut = statut;
+		this.nb_Objetss_aucttion=0;
+	}
 	public List<Objets> getMesObjetss() {
 		return mesObjetss;
 	}
@@ -122,20 +117,14 @@ public class Client implements Serializable {
 			
 		}
 	}
-	
-	
-	public List<Auction> getMesauction() {
-		return mesauction;
-	}
-
-
-	public void setMesauction(ArrayList<Auction> mesauction) {
-		this.mesauction = mesauction;
-	}
-
 	@Override
 	public String toString() {
-		return "Client [ mesObjetss=" + mesObjetss + "]";
+		return "Client_info [ \t" + pseudo + "|\t" + nom + "|\t" + prenom + "|\t" + code_postal
+				+ "|\t" + mail + "|\t" + statut + "|\t"
+				+ nb_Objetss_aucttion + "\t ]";
 	}
+	
+	
+
 	
 }

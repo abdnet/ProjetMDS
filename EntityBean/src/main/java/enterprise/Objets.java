@@ -28,7 +28,7 @@ public class Objets implements Serializable {
 	private String nom;
 	@Column
 	private String categorie;
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "pseudo")
 	private Client client;
 	private static final long serialVersionUID = 1L;
@@ -36,6 +36,24 @@ public class Objets implements Serializable {
 	
 	
 	
+
+
+	public Objets() {
+		super();
+	}   
+	
+	
+
+	public Objets(int id_objet, String description, String nom, String categorie, Client client) {
+		this.id_objet = id_objet;
+		this.description = description;
+		this.nom = nom;
+		this.categorie = categorie;
+		this.client = client;
+	}
+
+
+
 	public Client getClient() {
 		return client;
 	}
@@ -43,11 +61,6 @@ public class Objets implements Serializable {
 		this.client = client;
 	}
 
-
-
-	public Objets() {
-		super();
-	}   
 	public int getId() {
 		return this.id_objet;
 	}
@@ -75,5 +88,13 @@ public class Objets implements Serializable {
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
+
+
+
+	@Override
+	public String toString() {
+		return "Objets [\t" + id_objet + "|\t" + description + "|\t" + nom + "|\t"+ categorie + "\t ]";
+	}
    
+	
 }

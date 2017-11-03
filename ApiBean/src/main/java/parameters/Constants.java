@@ -20,6 +20,7 @@ public interface Constants {
     public static final String JPQL_SELECT_ALL_AUCTION_BY_CLIENT_ID="SELECT a FROM Auction a WHERE a.client=?1";
     public static final String JPQL_COUNT_AUCTION_CREATED_BY_CLIENT="select count(a) from Auction a where a.client=?1 and a.statut=?2";
     public static final String JPQL_ADD_OBJET_TO_AUCTION="select count(aa) from Auction aa where aa.client=?1 and aa.Objets=?2";
+    public static final String JPQL_CHECK_AUCTION_CLIENT="SELECT ac FROM auctions_client ac  WHERE ac.AUCTION_ID=?1 and ac.MESABONNES_PSEUDO=?2";
     public static final int PARAM_AUCTION_STATUT_STARTED=1;
     public static final int PARAM_AUCTION_STATUT_NOT_STARTED=0;
     public static final int PARAM_AUCTION_STATUT_CLOSED=2;
