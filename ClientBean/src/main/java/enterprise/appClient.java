@@ -118,7 +118,7 @@ public class appClient {
 			
 			//Afichage des objets
 			
-			System.out.println("......................All Client.........................................");
+			System.out.println("......................Simple Client.........................................");
 			
 			System.out.println("*******************************************************************");
 			System.out.println("|              |                     |                |            |");
@@ -136,6 +136,38 @@ public class appClient {
 
 			}
 			
+			System.out.println("\n\n......................Simple Client.........................................");
+			
+			System.out.println("*****************************************************************************************");
+			System.out.println("|              |                     |                                |                  |");
+			System.out.println("|     ID       |     Nom             |  Description                   |    propriétaire  |");
+			System.out.println("|              |                     |                                |                  |");
+			System.out.println("******************************************************************************************");
+			Collection<Objets> allobjets =sb.getAllObjets();
+			for(Objets objet:allobjets) {
+			System.out.println("|              |                     |                                |                  |");
+			System.out.println("|    "+objet.getId()+"         |  "+objet.getNom()+"|    "+objet.getDescription()+"|"+objet.getClient().getNom()+"|");
+			System.out.println("|              |                     |                                |                  |");
+			System.out.println("------------------------------------------------------------------------------------------");
+
+			}
+			
+			System.out.println("\n\n......................Auction avant le demarrage.........................................");
+			
+			System.out.println("*****************************************************************************************");
+			System.out.println("|              |                     |                                |                  |");
+			System.out.println("|     ID       |     Objet           |  Statut                        |    propriétaire  |");
+			System.out.println("|              |                     |(1:start,0:not-start,2:close)  |                  |");
+			System.out.println("******************************************************************************************");
+			List<Auction> allauctions = sb2.getAllAuction();
+			for(Auction auction:allauctions) {
+			System.out.println("|              |                     |                                |                  |");
+			System.out.println("|      "+auction.getId()+"       |     "+auction.getObjets().getNom()+"   |                   "+auction.getStatut()+"            |  "+auction.getClient().getNom()+" |");
+			System.out.println("|              |                     |                                |                  |");
+			System.out.println("------------------------------------------------------------------------------------------");
+			}
+			
+			
 			System.out.println("\n\n\n\n ................Lancer les auctions..........................");
 			ac1 = sb2.getAuctionById(ac1.getId());ac1.setDuree(20).setPrix_depart(24).setPrix_inc(10);sb2.updateAuction(ac1);
 			ac2 = sb2.getAuctionById(ac2.getId());ac2.setDuree(44).setPrix_depart(21).setPrix_inc(10);sb2.updateAuction(ac2);			
@@ -149,10 +181,39 @@ public class appClient {
 			System.out.println("Start auction  "+ac6.getId()+"..................."+sb2.startAuction(cl5.getId(),ac6.getId()));
 			System.out.println("Start auction  "+ac7.getId()+"..................."+sb2.startAuction(cl4.getId(),ac7.getId()));
 			System.out.println("Start auction  "+ac8.getId()+"..................."+sb2.startAuction(cl2.getId(),ac8.getId()));
-			
+
+			System.out.println("\n\n......................Auction aprés le demarrage.........................................");
+
+			System.out.println("***************************************************************************************************************************");
+			System.out.println("|              |                     |                                |                  |         |          |           |");
+			System.out.println("|     ID       |     Objet           |  Statut                        |    propriétaire  |  Bid    | Prix de  |   Durée   |");
+			System.out.println("|              |                     |(1:start,0:not-start,2:close)   |                  |         | départ   |           |");
+			System.out.println("***************************************************************************************************************************");
+			List<Auction> allauctionss = sb2.getAllAuction();
+			for(Auction auction:allauctionss) {
+			System.out.println("|              |                     |                                |                  |         |          |           |");
+			System.out.println("|      "+auction.getId()+"       |     "+auction.getObjets().getNom()+"   |                   "+auction.getStatut()+"            |  "+auction.getClient().getNom()+"|   "+auction.getPrix_inc()+"   |  "+auction.getPrix_depart()+"    |    "+auction.getDuree()+"   |");
+			System.out.println("|              |                     |                                |                  |         |          |           |");
+			System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+			}
 			System.out.println("\n\n\n ...........Inscription aux auctions.......................................");
 			System.out.println("Le client "+cl1.getNom()+" a fait un bid sur l'auction "+ac1.getId()+" ==> "+sb2.sendBidAution(cl1.getId(), ac1.getId(), true));
+			
 			System.out.println("Le client "+cl2.getNom()+" a fait un bid sur l'auction "+ac1.getId()+" ==> "+sb2.sendBidAution(cl2.getId(), ac1.getId(), true));
+			System.out.println("\n\n......................Auction aprés deux bids.........................................");
+
+			System.out.println("***************************************************************************************************************************");
+			System.out.println("|              |                     |                                |                  |         |          |           |");
+			System.out.println("|     ID       |     Objet           |  Statut                        |    propriétaire  |  Bid    | Prix     |   Durée   |");
+			System.out.println("|              |                     |(1:start,0:not-start,2:close)   |                  |         | final    |           |");
+			System.out.println("***************************************************************************************************************************");
+			List<Auction> bis = sb2.getAllAuction();
+			for(Auction auction:bis) {
+			System.out.println("|              |                     |                                |                  |         |          |           |");
+			System.out.println("|      "+auction.getId()+"       |     "+auction.getObjets().getNom()+"   |                   "+auction.getStatut()+"            |  "+auction.getClient().getNom()+"|   "+auction.getPrix_inc()+"   |  "+auction.getPrix_final()+"    |    "+auction.getDuree()+"   |");
+			System.out.println("|              |                     |                                |                  |         |          |           |");
+			System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+			}
 			System.out.println("Le client "+cl1.getNom()+" a fait un bid sur l'auction "+ac1.getId()+" ==> "+sb2.sendBidAution(cl1.getId(), ac1.getId(), true));
 			System.out.println("Le client "+cl5.getNom()+" a fait un bid sur l'auction "+ac1.getId()+" ==> "+sb2.sendBidAution(cl5.getId(), ac1.getId(), true));
 			System.out.println("Le client "+cl1.getNom()+" a fait un bid sur l'auction "+ac2.getId()+" ==> "+sb2.sendBidAution(cl1.getId(), ac2.getId(), true));
@@ -160,7 +221,20 @@ public class appClient {
 			//en utilisant les threads on peut simuler le temps de l'auction
 			System.out.println("Le client "+cl1.getNom()+" a fait un bid sur l'auction "+ac1.getId()+" ==> "+sb2.sendBidAution(cl1.getId(), ac1.getId(), false));
 			System.out.println("Le client "+cl3.getNom()+" a fait un bid sur l'auction "+ac2.getId()+" ==> "+sb2.sendBidAution(cl3.getId(), ac2.getId(), false));
+			System.out.println("\n\n......................A la fin d'une auction.........................................");
 
+			System.out.println("***************************************************************************************************************************");
+			System.out.println("|              |                     |                                |                  |         |          |           |");
+			System.out.println("|     ID       |     Objet           |  Statut                        |    propriétaire  |  Bid    |Prix final|   Durée   |");
+			System.out.println("|              |                     |(1:start,0:not-start,2:close)   |                  |         |          |           |");
+			System.out.println("***************************************************************************************************************************");
+			List<Auction> end = sb2.getAllAuction();
+			for(Auction auction:end) {
+			System.out.println("|              |                     |                                |                  |         |          |           |");
+			System.out.println("|      "+auction.getId()+"       |     "+auction.getObjets().getNom()+"   |                   "+auction.getStatut()+"            |  "+auction.getClient().getNom()+"           |   "+auction.getPrix_inc()+"   |  "+auction.getPrix_final()+"    |    "+auction.getDuree()+"   |");
+			System.out.println("|              |                     |                                |                  |         |          |           |");
+			System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+			}
 			
 		} catch(Exception e) {
 			e.printStackTrace();

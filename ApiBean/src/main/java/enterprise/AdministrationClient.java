@@ -26,8 +26,8 @@ public interface AdministrationClient  {
 	//mettre à jour un les droits d'un client
 	/**
 	*Permet de mettre à jour les droits du client.
- * prend en parametre le client, ses nouveaux droits, l'aministrateur, et un entier
- * Nous renvoie un booleen disant si le client a été ajouté ou pas.
+	* prend en parametre le client, ses nouveaux droits, l'aministrateur, et un entier
+	* Nous renvoie un booleen disant si le client a été ajouté ou pas.
 	 * 
 	 * @param c
 	 * @param rights
@@ -104,7 +104,7 @@ public interface AdministrationClient  {
 	 * @return
 	 */
 	public String DeleteAllObjets();
-	//**
+	/**
 	 * 
 	 * @param cible
 	 * @param admin

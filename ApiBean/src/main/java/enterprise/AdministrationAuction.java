@@ -63,7 +63,7 @@ public interface AdministrationAuction {
 	 */
 	public boolean closeAuction(int a);
 	/**
-	 * permet de supprimer une enchere, et ce de la souce de données 
+	 * permet de supprimer une enchere, et ce de la source de données 
 	 * @param c
 	 * @param a
 	 * @return
