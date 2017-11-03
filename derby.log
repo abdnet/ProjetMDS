@@ -1307,3 +1307,49 @@ os.arch=amd64
 os.version=4.10.0-38-generic
 derby.system.home=/media/azayko/data/M2/PROJETS/micro/ProjetMDS/ProjetMDS
 Chargeur de classe de la base de données démarré - derby.database.classpath = ''
+----------------------------------------------------------------
+Fri Nov 03 13:18:58 CET 2017 : fermeture du moteur Derby
+----------------------------------------------------------------
+Fri Nov 03 13:19:00 CET 2017:
+Fermeture de l'instance a816c00e-015f-8173-f854-ffffd1d358f9 sur le répertoire de base de données /media/azayko/data/M2/PROJETS/micro/ProjetMDS/ProjetMDS/sun-appserv-samples avec le chargeur de classe sun.misc.Launcher$AppClassLoader@30a4effe 
+----------------------------------------------------------------
+Fri Nov 03 13:19:00 CET 2017 : Apache Derby Network Server - 10.10.2.0 - (1582446) arrêté
+Fri Nov 03 13:19:39 CET 2017 : Le gestionnaire de sécurité a été installé à l'aide de la stratégie de sécurité de serveur de base.
+Fri Nov 03 13:19:39 CET 2017 : Apache Derby Network Server - 10.10.2.0 - (1582446) démarré et prêt à accepter les connexions sur le port 1527
+Fri Nov 03 13:19:39 CET 2017 : Apache Derby Network Server - 10.10.2.0 - (1582446) démarré et prêt à accepter les connexions sur le port 1527
+----------------------------------------------------------------
+Fri Nov 03 13:19:42 CET 2017:
+Amorçage de Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446) : instance a816c00e-015f-81d2-88be-ffffd1d358f9 
+dans le répertoire de base de données /media/azayko/data/M2/PROJETS/micro/ProjetMDS/ProjetMDS/sun-appserv-samples avec le chargeur de classe sun.misc.Launcher$AppClassLoader@1c8825a5
+Chargé de file:/media/azayko/data/M2/PROJETS/ServerIDE/server/glassfish4/javadb/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.7.0_72-b14
+user.dir=/media/azayko/data/M2/PROJETS/micro/ProjetMDS/ProjetMDS
+os.name=Linux
+os.arch=amd64
+os.version=4.10.0-38-generic
+derby.system.home=/media/azayko/data/M2/PROJETS/micro/ProjetMDS/ProjetMDS
+Chargeur de classe de la base de données démarré - derby.database.classpath = ''
+----------------------------------------------------------------
+Fri Nov 03 13:32:00 CET 2017 : fermeture du moteur Derby
+----------------------------------------------------------------
+Fri Nov 03 13:32:02 CET 2017:
+Fermeture de l'instance a816c00e-015f-81d2-88be-ffffd1d358f9 sur le répertoire de base de données /media/azayko/data/M2/PROJETS/micro/ProjetMDS/ProjetMDS/sun-appserv-samples avec le chargeur de classe sun.misc.Launcher$AppClassLoader@1c8825a5 
+----------------------------------------------------------------
+Fri Nov 03 13:32:02 CET 2017 : Apache Derby Network Server - 10.10.2.0 - (1582446) arrêté
+Fri Nov 03 13:32:40 CET 2017 : Le gestionnaire de sécurité a été installé à l'aide de la stratégie de sécurité de serveur de base.
+Fri Nov 03 13:32:40 CET 2017 : Apache Derby Network Server - 10.10.2.0 - (1582446) démarré et prêt à accepter les connexions sur le port 1527
+Fri Nov 03 13:32:40 CET 2017 : Apache Derby Network Server - 10.10.2.0 - (1582446) démarré et prêt à accepter les connexions sur le port 1527
+----------------------------------------------------------------
+Fri Nov 03 13:32:43 CET 2017:
+Amorçage de Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446) : instance a816c00e-015f-81de-743e-ffffd1d358f9 
+dans le répertoire de base de données /media/azayko/data/M2/PROJETS/micro/ProjetMDS/ProjetMDS/sun-appserv-samples avec le chargeur de classe sun.misc.Launcher$AppClassLoader@1c8825a5
+Chargé de file:/media/azayko/data/M2/PROJETS/ServerIDE/server/glassfish4/javadb/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.7.0_72-b14
+user.dir=/media/azayko/data/M2/PROJETS/micro/ProjetMDS/ProjetMDS
+os.name=Linux
+os.arch=amd64
+os.version=4.10.0-38-generic
+derby.system.home=/media/azayko/data/M2/PROJETS/micro/ProjetMDS/ProjetMDS
+Chargeur de classe de la base de données démarré - derby.database.classpath = ''

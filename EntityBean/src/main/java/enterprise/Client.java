@@ -119,9 +119,9 @@ public class Client implements Serializable {
 	}
 	@Override
 	public String toString() {
-		return "Client_info [ \t" + pseudo + "|\t" + nom + "|\t" + prenom + "|\t" + code_postal
-				+ "|\t" + mail + "|\t" + statut + "|\t"
-				+ nb_Objetss_aucttion + "\t ]";
+		return " [ | " + pseudo + "| " + nom + "| " + prenom + "| " + code_postal
+				+ "| " + mail + "| " + statut + "| "
+				+ nb_Objetss_aucttion + " ]";
 	}
 	
 	

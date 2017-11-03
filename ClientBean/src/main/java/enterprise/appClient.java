@@ -1,6 +1,9 @@
 
 package enterprise;
 
+import java.util.Collection;
+import java.util.List;
+
 import javax.naming.InitialContext;
 
 
@@ -9,12 +12,13 @@ import javax.naming.InitialContext;
 public class appClient {
 
 	public static void main(String args[]) {
-		Client c,c2,c3,c4;
-		Objets o,o1;
-		AdministrationClient sb =null,sb3=null;
+		AdministrationClient sb =null;
 		AdministrationAuction sb2=null;
+		String sim="Simple";
+		String adm="Admin";
 	        try {
 			InitialContext ic = new InitialContext();
+			
 
 			sb = (AdministrationClient) ic.lookup("enterprise.AdministrationClient");
 			sb2 = (AdministrationAuction) ic.lookup("enterprise.AdministrationAuction");
@@ -28,6 +32,12 @@ public class appClient {
 			cl3= new Client("Dup2","Dupont","Lionel",75019,"dupont@gmail.com",2);
 			cl4= new Client("Dup3","Axel","Martin",78109,"axel@gmail.com",2);
 			cl5= new Client("Dup4","Mimi","Bouch",51009,"mimi@gmail.com",2);
+			
+			System.out.println("Client "+cl1);
+			System.out.println("Client "+cl2);
+			System.out.println("Client "+cl3);
+			System.out.println("Client "+cl4);
+			System.out.println("Client "+cl5);
 			
 			System.out.println("\n\n\n\n .............Persistence des utilisateurs ...................");
 			
@@ -46,6 +56,13 @@ public class appClient {
 			obj3 = new Objets(3, "ordinateur portable", "ordinateur 3", "technologie",sb.getClientById(cl3.getId()));
 			obj4 = new Objets(4, "ordinateur portable", "ordinateur 4", "technologie",sb.getClientById(cl4.getId()));
 			obj5 = new Objets(5, "ordinateur portable", "ordinateur 5", "technologie",sb.getClientById(cl4.getId()));
+			
+			System.out.println("Objet "+obj1);
+			System.out.println("Objet "+obj2);
+			System.out.println("Objet "+obj3);
+			System.out.println("Objet "+obj4);
+			System.out.println("Objet "+obj5);
+			
 
 			System.out.println("\n\n\n\n .............Persistence des Objets ...................");
 			
@@ -67,7 +84,7 @@ public class appClient {
 				System.out.println(obj +"\n\n");
 			}
 			
-		
+			
 			System.out.println("\n\n\n\n .............Creation des auctions ...................");
 			
 			Auction ac1,ac2,ac3,ac4,ac5,ac6,ac7,ac8;
@@ -80,6 +97,15 @@ public class appClient {
 			ac7=new Auction(7,sb.getClientById(cl4.getId()), sb.getObjetsById(obj1.getId()));
 			ac8=new Auction(8,sb.getClientById(cl2.getId()), sb.getObjetsById(obj1.getId()));
 			
+			System.out.println("Auction "+ac1);
+			System.out.println("Auction "+ac2);
+			System.out.println("Auction "+ac3);
+			System.out.println("Auction "+ac4);
+			System.out.println("Auction "+ac5);
+			System.out.println("Auction "+ac6);
+			System.out.println("Auction "+ac7);
+			System.out.println("Auction "+ac8);
+			
 			System.out.println("\n\n\n\n .............Persistence des auctions ...................");
 			System.out.println("Persist auction "+ac1.getId()+"..................."+sb2.creatAuction(ac1));
 			System.out.println("Persist auction "+ac2.getId()+"..................."+sb2.creatAuction(ac2));
@@ -89,6 +115,26 @@ public class appClient {
 			System.out.println("Persist auction "+ac6.getId()+"..................."+sb2.creatAuction(ac6));
 			System.out.println("Persist auction "+ac7.getId()+"..................."+sb2.creatAuction(ac7));
 			System.out.println("Persist auction "+ac8.getId()+"..................."+sb2.creatAuction(ac8));
+			
+			//Afichage des objets
+			
+			System.out.println("......................All Client.........................................");
+			
+			System.out.println("*******************************************************************");
+			System.out.println("|              |                     |                |            |");
+			System.out.println("|     ID       |     Nom             |  Nombre auction|    Statut  |");
+			System.out.println("|              |                     |                |            |");
+			System.out.println("********************************************************************");
+			Collection<Client> allclients =sb.getAllClients();
+			for(Client client:allclients) {
+			System.out.println("|              |                     |                |            |");
+
+				System.out.println("|"+client.getId()+"          |"+client.getNom()+"              |        "+client.getNb_Objetss_aucttion()+"       |    "+client.getStatut()+""
+						+ "      |");
+			System.out.println("|              |                     |                |            |");
+			System.out.println("--------------------------------------------------------------------");
+
+			}
 			
 			System.out.println("\n\n\n\n ................Lancer les auctions..........................");
 			ac1 = sb2.getAuctionById(ac1.getId());ac1.setDuree(20).setPrix_depart(24).setPrix_inc(10);sb2.updateAuction(ac1);
@@ -111,15 +157,11 @@ public class appClient {
 			System.out.println("Le client "+cl5.getNom()+" a fait un bid sur l'auction "+ac1.getId()+" ==> "+sb2.sendBidAution(cl5.getId(), ac1.getId(), true));
 			System.out.println("Le client "+cl1.getNom()+" a fait un bid sur l'auction "+ac2.getId()+" ==> "+sb2.sendBidAution(cl1.getId(), ac2.getId(), true));
 			System.out.println("Le client "+cl4.getNom()+" a fait un bid sur l'auction "+ac3.getId()+" ==> "+sb2.sendBidAution(cl1.getId(), ac3.getId(), true));
-			//en utilisant les thread on peut simuler les temps de l'auction
+			//en utilisant les threads on peut simuler le temps de l'auction
 			System.out.println("Le client "+cl1.getNom()+" a fait un bid sur l'auction "+ac1.getId()+" ==> "+sb2.sendBidAution(cl1.getId(), ac1.getId(), false));
 			System.out.println("Le client "+cl3.getNom()+" a fait un bid sur l'auction "+ac2.getId()+" ==> "+sb2.sendBidAution(cl3.getId(), ac2.getId(), false));
 
-			/*System.out.println("Le cl			System.out.println("Le client "+cl1.getNom()+" a fait un bid sur l'auction "+ac1.getId()+" ==> "+sb2.sendBidAution(cl1.getId(), ac1.getId(), true));
-			System.out.println("Le client "+cl1.getNom()+" a fait un bid sur l'auction "+ac1.getId()+" ==> "+sb2.sendBidAution(cl1.getId(), ac1.getId(), true));
-ient "+cl4.getId()+" demande l'inscription à l'auction "+ac2.getId() +" reponse ==> "+sb2.connectToAuction(ac2.getId(),cl4.getId()));
-			System.out.println("Le client "+cl4.getId()+" demande l'inscription à l'auction "+ac2.getId() +" reponse ==> "+sb2.connectToAuction(ac2.getId(),cl4.getId()));
-	*/
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

@@ -93,7 +93,7 @@ public class Objets implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Objets [\t" + id_objet + "|\t" + description + "|\t" + nom + "|\t"+ categorie + "\t ]";
+		return "Objets [ " + id_objet + "| " + description + "| " + nom + "| "+ categorie +"| "+client.getId() +"  ]";
 	}
    
 	

@@ -145,8 +145,8 @@ public class Auction implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "Auction [id=" + id + ", statut=" + statut + ", client=" + client + ", Objets=" + Objets + ", duree="
-				+ duree + ", prix_depart=" + prix_depart + ", prix_inc=" + prix_inc + ", abonnees="  + "]";
+		return "Auction [ | " + id + ", | " + statut + ", | " + client.getId() + ", | " + Objets.getId() + ", | "
+				+ duree + ",| " + prix_depart + ", | " + prix_inc  + "]";
 	} 
    
 }
